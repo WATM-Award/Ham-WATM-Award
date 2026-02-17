@@ -15,18 +15,19 @@
         body {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 60px 20px;
-            text-align: center;
+            padding: 40px 20px;
             color: #333;
             line-height: 1.8;
-            /* 关键修复：使用GitHub Pages的Raw CDN地址（不是blob/仓库地址） */
+            font-size: 16px;
+            /* bg2.png绝对地址，确保规则页能加载 */
             background: url("https://raw.githubusercontent.com/watmham/WATM/main/images/bg2.png") no-repeat center center;
             background-size: cover;
             background-attachment: fixed;
             background-color: #f8f8f8;
             position: relative;
+            z-index: 0;
         }
-        /* 遮罩确保文字清晰 */
+        /* 半透明遮罩，保证规则文字清晰 */
         body::before {
             content: "";
             position: absolute;
@@ -43,6 +44,8 @@
             display: inline-block;
             color: #0066cc;
             text-decoration: none;
+            position: relative;
+            z-index: 1;
         }
         .back:hover {
             text-decoration: underline;
@@ -54,6 +57,9 @@
             margin-bottom: 40px;
             padding-bottom: 10px;
             border-bottom: 1px solid #666;
+            color: #2c3e50;
+            position: relative;
+            z-index: 1;
         }
         h1 .en {
             font-size: 22px;
@@ -66,8 +72,14 @@
             font-size: 20px;
             margin: 30px 0 15px;
             color: #000;
+            position: relative;
+            z-index: 1;
         }
         /* 文本样式 */
+        p, ul, li {
+            position: relative;
+            z-index: 1;
+        }
         p {
             margin-bottom: 10px;
         }
@@ -92,6 +104,8 @@
             color: #000;
             text-decoration: none;
             border-radius: 3px;
+            position: relative;
+            z-index: 1;
         }
         .download:hover {
             background: #eee;
@@ -105,12 +119,16 @@
             text-align: right;
             font-size: 14px;
             color: #666;
+            position: relative;
+            z-index: 1;
         }
         .copyright {
             text-align: center;
             margin-top: 50px;
             font-size: 14px;
             color: #666;
+            position: relative;
+            z-index: 1;
         }
         a {
             color: #0066cc;
