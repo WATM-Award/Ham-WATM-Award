@@ -78,27 +78,6 @@
             position: relative;
             z-index: 1;
         }
-
-        /* 未登录提示 */
-        .not-login-tip {
-            text-align: center;
-            padding: 20px;
-            background: rgba(255,255,255,0.9);
-            border-radius: 8px;
-            margin-bottom: 30px;
-            color: #e74c3c;
-            font-size: 18px;
-            position: relative;
-            z-index: 1;
-        }
-        .not-login-tip a {
-            color: #3498db;
-            text-decoration: none;
-        }
-        .not-login-tip a:hover {
-            text-decoration: underline;
-        }
-
         /* 提交表单样式 */
         .submit-form {
             background: rgba(255,255,255,0.9);
@@ -109,7 +88,6 @@
             position: relative;
             z-index: 1;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            display: none; /* 未登录时隐藏 */
         }
         .submit-form.show {
             display: block;
@@ -297,11 +275,6 @@
         最近泰安有发射的电台
         <span class="en">Recently Active Stations in Tai'an</span>
     </h1>
-
-    <!-- 未登录提示 -->
-    <div class="not-login-tip" id="not-login-tip">
-        请先<a href="../">返回主页</a>登录后再提交电台信息！| Please <a href="../">return to homepage</a> and login first!
-    </div>
 
     <!-- 提交表单区域（未登录隐藏） -->
     <div class="submit-form" id="submit-form">
