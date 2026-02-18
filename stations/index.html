@@ -283,41 +283,67 @@
 
     <!-- 静态呼号列表 -->
     <h2>泰安在册电台呼号 | Registered Station Call Signs in Tai'an</h2>
-    <ul class="station-list">
-        <li>BA4IHB</li>
-        <li>BA4III</li>
-        <li>BA4JAE</li>
-        <li>BA4JBN</li>
-        <li>BA4JBU</li>
-        <li>BA4JFO</li>
-        <li>BA4JUN</li>
-        <li>BD4JK</li>
-        <li>BD4LG</li>
-        <li>BD4NW</li>
-        <li>BG4PO</li>
-        <li>BG4JUR</li>
-        <li>BG4JUS</li>
-        <li>BG4JUT</li>
-        <li>BG4JUV</li>
-        <li>BG4LZM</li>
-        <li>BG4LZN</li>
-        <li>BG4LZO</li>
-        <li>BG4LTZ</li>
-        <li>BG4LZV</li>
-        <li>BH4OBW</li>
-        <li>BI4WX</li>
-        <li>BI4XA</li>
-        <li>BI4KW</li>
-        <li>BI4WG</li>
-        <li>BI4HS</li>
-        <li>BI4QH</li>
-        <li>BN4CA</li>
-        <li>BI4MPY</li>
-        <li>BI4PID</li>
-        <li>BI4PIH</li>
-        <li>BI4PUM</li>
-    </ul>
+    <!-- 两列呼号列表 -->
+    <div class="two-col-list" style="position: relative; z-index: 1;">
+      <div class="col">
+        <div>BA4IHB</div>
+        <div>BA4III</div>
+        <div>BA4JAE</div>
+        <div>BA4JBN</div>
+        <div>BA4JBU</div>
+        <div>BA4JFO</div>
+        <div>BA4JUN</div>
+        <div>BD4JK</div>
+        <div>BD4LG</div>
+        <div>BD4NW</div>
+        <div>BG4JPO</div>
+        <div>BG4JUR</div>
+        <div>BG4JUS</div>
+        <div>BG4JUT</div>
+        <div>BG4JUV</div>
+      </div>
+      <div class="col">
+        <div>BG4LZM</div>
+        <div>BG4LZN</div>
+        <div>BG4LZO</div>
+        <div>BG4LZT</div>
+        <div>BG4LZV</div>
+        <div>BH4OBW</div>
+        <div>BI4IWX</div>
+        <div>BI4IXA</div>
+        <div>BI4JKW</div>
+        <div>BI4JWG</div>
+        <div>BI4LHS</div>
+        <div>BI4LQH</div>
+        <div>MI4MPY</div>
+        <div>BI4NCA</div>
+        <div>BI4PID</div>
+        <div>BI4PIH</div>
+        <div>BI4PUM</div>
+      </div>
+    </div>
 
+<style>
+.two-col-list {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px 0;
+}
+.two-col-list .col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.two-col-list div {
+  background: rgba(255,255,255,0.7);
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  text-align: center;
+  min-width: 120px;
+}
+</style>
     <!-- 说明文本 -->
     <div class="note">
         <p>注：列表实时更新，包含近期在泰安地区有发射记录的业余电台呼号，如有遗漏请发送电子邮件至watmham@outlook.com</p>
