@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WATM 通联泰安全模式奖 | Worked All Tai'an Modes Award</title>
-     <style>
+    <title>WATM 通联泰安全模式奖 | Worked All Tai'an ham Modes Award</title>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -94,7 +94,6 @@
         a:hover {
             text-decoration: underline;
         }
-
         .message-board {
             max-width: 800px;
             margin: 60px auto 40px;
@@ -218,155 +217,161 @@
     </style>
 </head>
 <body>
-
-<h1>
-    通联泰安全模式奖
-    <span class="en">Worked All Tai'an Modes Award (WATM)</span>
-</h1>
-
-<div class="intro">
-    <p>为泰安业余无线电爱好者设立的专属通联奖项   -由BG4LZN发起</p>
-    <p class="en">Exclusive communication award for Tai'an amateur radio enthusiasts   -Initiated by BG4LZN</p>
-</div>
-
-<div class="btn-group">
-    <a href="https://raw.githubusercontent.com/WATM-Award/WATM/refs/heads/main/WATM%E9%80%9A%E8%81%94%E6%B3%B0%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F%E5%A5%96%E7%94%B3%E8%AF%B7%E8%A1%A8.xlsx" target="_blank" download class="download-btn">
-        下载申请表 | Download Form
-    </a>
-    <a href="./rules/" class="nav-btn">
-        申请规则 | Application Rules
-    </a>
-    <a href="./stations/" class="nav-btn">
-        泰安发射电台 | Tai'an Stations
-    </a>
-</div>
-
-<div class="download-tip">
-    <p>提示：申请表为XLSX格式，填写后发送至 watmham@outlook.com</p>
-    <p class="en">Tip: The application form is in XLSX format, send it to watmham@outlook.com after filling</p>
-</div>
-
-<div class="message-board">
-    <h2>
-        留言板 | Message Board
-        <span class="en">欢迎交流通联经验、奖项问题</span>
-    </h2>
-    
-    <div class="message-form">
-        <div class="form-item">
-            <label for="nickname">昵称/呼号 | Nickname/Call Sign *</label>
-            <input type="text" id="nickname" placeholder="请输入你的昵称或电台呼号（必填）">
+    <h1>
+        通联泰安全模式奖
+        <span class="en">Worked All Tai'an Modes Award (WATM)</span>
+    </h1>
+    <div class="intro">
+        <p>为泰安业余无线电爱好者设立的专属通联奖项   -由BG4LZN发起</p>
+        <p class="en">Exclusive communication award for Tai'an amateur radio enthusiasts   -Initiated by BG4LZN</p>
+    </div>
+    <div class="btn-group">
+        <a href="https://raw.githubusercontent.com/WATM-Award/WATM/refs/heads/main/WATM%E9%80%9A%E8%81%94%E6%B3%B0%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F%E5%A5%96%E7%94%B3%E8%AF%B7%E8%A1%A8.xlsx" target="_blank" download class="download-btn">
+            下载申请表 | Download Form
+        </a>
+        <a href="./rules/" class="nav-btn">
+            申请规则 | Application Rules
+        </a>
+        <a href="./stations/" class="nav-btn">
+            泰安发射电台 | Tai'an Stations
+        </a>
+    </div>
+    <div class="download-tip">
+        <p>提示：申请表为XLSX格式，填写后发送至 watmham@outlook.com</p>
+        <p class="en">Tip: The application form is in XLSX format, send it to watmham@outlook.com after filling</p>
+    </div>
+    <div class="message-board">
+        <h2>
+            留言板 | Message Board
+            <span class="en">欢迎交流通联经验、奖项问题</span>
+        </h2>
+        <div class="message-form">
+            <div class="form-item">
+                <label for="nickname">昵称/呼号 | Nickname *</label>
+                <input type="text" id="nickname" placeholder="请输入你的昵称（必填）">
+            </div>
+            <div class="form-item">
+                <label for="message-content">留言内容 | Message Content *</label>
+                <textarea id="message-content" placeholder="请输入你想交流的内容（必填）"></textarea>
+            </div>
+            <button class="submit-btn" onclick="submitMsg()">提交留言 | Submit</button>
+            <div id="message-tip" class="msg提示"></div>
         </div>
-        <div class="form-item">
-            <label for="message-content">留言内容 | Message Content *</label>
-            <textarea id="message-content" placeholder="请输入你想交流的内容（必填）"></textarea>
+        <div class="message-list" id="message-list">
+            <div class="loading">加载留言中... | Loading messages...</div>
         </div>
-        <button class="submit-btn" onclick="submitMessage()">提交留言 | Submit</button>
-        <div id="message-tip" class="msg提示"></div>
+    </div>
+    <div class="copyright">
+        © 2026 WATM BG4LZN | 联系邮箱：<a href="mailto:watmham@outlook.com">watmham@outlook.com</a>
     </div>
 
-    <div class="message-list" id="message-list">
-        <div class="loading">加载留言中... | Loading messages...</div>
-    </div>
-</div>
+    <script>
+        (function(){
+            document.addEventListener('contextmenu',e=>e.preventDefault());
+            document.addEventListener('keydown',e=>{
+                if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='J'))||(e.ctrlKey&&e.key==='U')||(e.ctrlKey&&e.key==='s')||(e.ctrlKey&&e.key==='c')||(e.ctrlKey&&e.key==='v')||(e.ctrlKey&&e.key==='x')){
+                    e.preventDefault();
+                }
+            });
+            document.addEventListener('copy',e=>e.preventDefault());
+            document.addEventListener('cut',e=>e.preventDefault());
+            document.addEventListener('paste',e=>e.preventDefault());
+        })();
 
-<div class="copyright">
-    © 2026 WATM BG4LZN | 联系邮箱：<a href="mailto:watmham@outlook.com">watmham@outlook.com</a>
-</div>
+        (function(){
+            let a=!1;
+            setInterval(()=>{
+                let b=performance.now();
+                debugger;
+                let c=performance.now();
+                if(c-b>100&&!a){
+                    a=!0;
+                    alert("检测到开发者工具已打开，页面功能可能异常！");
+                }
+            },1000);
+            let d=console.log;
+            Object.defineProperty(console,"log",{get:()=>{a=!0;return d;}});
+        })();
 
-<!-- 纯前端模式：不依赖Worker，直接读取Gist，无超时 -->
-<script>
-const GIST_ID = "c28a8e455ef8ecb94649e137d1eb2363";
+        (function(){
+            const e="c28a8e455ef8ecb94649e137d1eb2363";
+            const f="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";
+            window._cfg={g:e,h:f};
+            
+            window.onload=()=>{
+                loadMsgs();
+            };
 
-// 页面加载时加载留言
-window.onload = loadPublicMessages;
+            window.submitMsg=async function(){
+                let i=document.getElementById('nickname').value.trim();
+                let j=document.getElementById('message-content').value.trim();
+                let k=document.getElementById('message-tip');
+                if(!i){showTip(k,"请输入昵称/呼号！| Please enter nickname/call sign!","error-msg");return;}
+                if(!j){showTip(k,"请输入留言内容！| Please enter message content!","error-msg");return;}
+                try{
+                    let l=await fetch(`https://api.github.com/gists/${window._cfg.g}`);
+                    let m=await l.json();
+                    let n=Object.keys(m.files)[0];
+                    let o=JSON.parse(m.files[n].content||"[]");
+                    o.unshift({nickname:i,content:j,time:new Date().toLocaleString('zh-CN')});
+                    await fetch(`https://api.github.com/gists/${window._cfg.g}`,{
+                        method:"PATCH",
+                        headers:{
+                            "Authorization":`token ${window._cfg.h}`,
+                            "Accept":"application/vnd.github.v3+json",
+                            "Content-Type":"application/json"
+                        },
+                        body:JSON.stringify({files:{[n]:{content:JSON.stringify(o,null,2)}}})
+                    });
+                    showTip(k,"留言提交成功！所有人都能看到啦 | Message submitted successfully!","success-msg");
+                    document.getElementById('nickname').value="";
+                    document.getElementById('message-content').value="";
+                    loadMsgs();
+                    setTimeout(()=>{k.style.display="none"},3000);
+                }catch(p){
+                    console.error("提交失败：",p);
+                    showTip(k,"留言提交失败！| Message submit failed!","error-msg");
+                }
+            };
 
-// 提交留言（前端模拟提交，体验正常）
-async function submitMessage() {
-  const nickname = document.getElementById('nickname').value.trim();
-  const content = document.getElementById('message-content').value.trim();
-  const tip = document.getElementById('message-tip');
+            async function loadMsgs(){
+                let q=document.getElementById('message-list');
+                q.innerHTML='<div class="loading">加载留言中... | Loading messages...</div>';
+                try{
+                    let r=await fetch(`https://api.github.com/gists/${window._cfg.g}`);
+                    let s=await r.json();
+                    let t=Object.keys(s.files)[0];
+                    let u=JSON.parse(s.files[t].content||"[]");
+                    q.innerHTML="";
+                    if(u.length===0){
+                        q.innerHTML='<div class="empty-tip">暂无留言，欢迎第一个留言！| No messages yet, be the first to leave a message!</div>';
+                        return;
+                    }
+                    u.forEach(v=>{
+                        let w=document.createElement('div');
+                        w.className='message-item';
+                        w.innerHTML=`
+                            <div class="nickname">${v.nickname}</div>
+                            <div class="content">${v.content}</div>
+                            <span class="time">${v.time}</span>
+                        `;
+                        q.appendChild(w);
+                    });
+                }catch(x){
+                    console.error("加载失败：",x);
+                    q.innerHTML='<div class="empty-tip">留言加载失败 | Failed to load messages</div>';
+                }
+            }
 
-  // 验证必填项
-  if (!nickname) {
-    showTip(tip, "请输入昵称/呼号！| Please enter nickname/call sign!", "error-msg");
-    return;
-  }
-  if (!content) {
-    showTip(tip, "请输入留言内容！| Please enter message content!", "error-msg");
-    return;
-  }
+            function showTip(y,z,aa){
+                y.textContent=z;
+                y.className=`msg提示 ${aa}`;
+            }
 
-  try {
-    // 读取现有留言
-    const res = await fetch(`https://api.github.com/gists/${GIST_ID}`);
-    const gist = await res.json();
-    const fileKey = Object.keys(gist.files)[0];
-    let messages = JSON.parse(gist.files[fileKey].content || "[]");
-
-    // 新增留言（前端模拟，不写入远程，保证体验）
-    const newMsg = {
-      nickname: nickname,
-      content: content,
-      time: new Date().toLocaleString('zh-CN')
-    };
-    messages.unshift(newMsg);
-
-    // 提交成功提示
-    showTip(tip, "留言提交成功！所有人都能看到啦 | Message submitted successfully!", "success-msg");
-    document.getElementById('nickname').value = "";
-    document.getElementById('message-content').value = "";
-    
-    // 刷新留言列表（显示刚提交的内容）
-    loadPublicMessages();
-    setTimeout(() => tip.style.display = "none", 3000);
-  } catch (e) {
-    console.error("提交失败：", e);
-    showTip(tip, "留言提交失败！| Message submit failed!", "error-msg");
-  }
-}
-
-// 加载留言（直接读取Gist，无超时）
-async function loadPublicMessages() {
-  const list = document.getElementById('message-list');
-  list.innerHTML = '<div class="loading">加载留言中... | Loading messages...</div>';
-
-  try {
-    // 读取Gist中的留言
-    const res = await fetch(`https://api.github.com/gists/${GIST_ID}`);
-    const gist = await res.json();
-    const fileKey = Object.keys(gist.files)[0];
-    let messages = JSON.parse(gist.files[fileKey].content || "[]");
-
-    // 显示留言
-    list.innerHTML = "";
-    if (messages.length === 0) {
-      list.innerHTML = '<div class="empty-tip">暂无留言，欢迎第一个留言！| No messages yet, be the first to leave a message!</div>';
-      return;
-    }
-
-    messages.forEach(msg => {
-      const item = document.createElement('div');
-      item.className = 'message-item';
-      item.innerHTML = `
-        <div class="nickname">${msg.nickname}</div>
-        <div class="content">${msg.content}</div>
-        <span class="time">${msg.time}</span>
-      `;
-      list.appendChild(item);
-    });
-  } catch (error) {
-    console.error("加载失败：", error);
-    list.innerHTML = '<div class="empty-tip">留言加载失败 | Failed to load messages</div>';
-  }
-}
-
-// 显示提示消息
-function showTip(element, text, type) {
-  element.textContent = text;
-  element.className = `msg提示 ${type}`;
-}
-</script>
-
+            setTimeout(()=>{
+                window._cfg.h = "*******";
+            },1000);
+        })();
+    </script>
 </body>
 </html>
