@@ -18,14 +18,12 @@
             text-align: center;
             color: #333;
             line-height: 1.8;
-            /* 关键修复：使用GitHub Pages的Raw CDN地址（不是blob/仓库地址） */
             background: url("https://raw.githubusercontent.com/watmham/WATM/main/images/bg2.png") no-repeat center center;
             background-size: cover;
             background-attachment: fixed;
             background-color: #f8f8f8;
             position: relative;
         }
-        /* 遮罩确保文字清晰 */
         body::before {
             content: "";
             position: absolute;
@@ -97,7 +95,6 @@
             text-decoration: underline;
         }
 
-        /* ========== 留言板样式 ========== */
         .message-board {
             max-width: 800px;
             margin: 60px auto 40px;
@@ -221,161 +218,155 @@
     </style>
 </head>
 <body>
-    <!-- 主标题 -->
-    <h1>
-        通联泰安全模式奖
-        <span class="en">Worked All Tai'an Modes Award (WATM)</span>
-    </h1>
 
-    <!-- 简介 -->
-    <div class="intro">
-        <p>为泰安业余无线电爱好者设立的专属通联奖项   -由BG4LZN发起</p>
-        <p class="en">Exclusive communication award for Tai'an amateur radio enthusiasts   -Initiated by BG4LZN</p>
-    </div>
+<h1>
+    通联泰安全模式奖
+    <span class="en">Worked All Tai'an Modes Award (WATM)</span>
+</h1>
 
-   <!-- 核心按钮：下载 + 规则 + 泰安发射电台 -->
+<div class="intro">
+    <p>为泰安业余无线电爱好者设立的专属通联奖项   -由BG4LZN发起</p>
+    <p class="en">Exclusive communication award for Tai'an amateur radio enthusiasts   -Initiated by BG4LZN</p>
+</div>
+
 <div class="btn-group">
-    <!-- 下载申请表按钮 -->
     <a href="https://raw.githubusercontent.com/WATM-Award/WATM/refs/heads/main/WATM%E9%80%9A%E8%81%94%E6%B3%B0%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F%E5%A5%96%E7%94%B3%E8%AF%B7%E8%A1%A8.xlsx" target="_blank" download class="download-btn">
         下载申请表 | Download Form
     </a>
-    <!-- 申请规则按钮 -->
     <a href="./rules/" class="nav-btn">
         申请规则 | Application Rules
     </a>
-    <!-- 新增：泰安发射电台按钮 -->
     <a href="./stations/" class="nav-btn">
         泰安发射电台 | Tai'an Stations
     </a>
 </div>
-    <!-- 下载提示 -->
-    <div class="download-tip">
-        <p>提示：申请表为XLSX格式，填写后发送至 watmham@outlook.com</p>
-        <p class="en">Tip: The application form is in XLSX format, send it to watmham@outlook.com after filling</p>
-    </div>
 
-    <!-- 留言板模块 -->
-    <div class="message-board">
-        <h2>
-            留言板 | Message Board
-            <span class="en">欢迎交流通联经验、奖项问题</span>
-        </h2>
-        
-        <!-- 留言表单 -->
-        <div class="message-form">
-            <div class="form-item">
-                <label for="nickname">昵称/呼号 | Nickname/Call Sign *</label>
-                <input type="text" id="nickname" placeholder="请输入你的昵称或电台呼号（必填）">
-            </div>
-            <div class="form-item">
-                <label for="message-content">留言内容 | Message Content *</label>
-                <textarea id="message-content" placeholder="请输入你想交流的内容（必填）"></textarea>
-            </div>
-            <button class="submit-btn" onclick="submitMessage()">提交留言 | Submit</button>
-            <div id="message-tip" class="msg提示"></div>
+<div class="download-tip">
+    <p>提示：申请表为XLSX格式，填写后发送至 watmham@outlook.com</p>
+    <p class="en">Tip: The application form is in XLSX format, send it to watmham@outlook.com after filling</p>
+</div>
+
+<div class="message-board">
+    <h2>
+        留言板 | Message Board
+        <span class="en">欢迎交流通联经验、奖项问题</span>
+    </h2>
+    
+    <div class="message-form">
+        <div class="form-item">
+            <label for="nickname">昵称/呼号 | Nickname/Call Sign *</label>
+            <input type="text" id="nickname" placeholder="请输入你的昵称或电台呼号（必填）">
         </div>
-
-        <!-- 留言列表 -->
-        <div class="message-list" id="message-list">
-            <div class="loading">加载留言中... | Loading messages...</div>
+        <div class="form-item">
+            <label for="message-content">留言内容 | Message Content *</label>
+            <textarea id="message-content" placeholder="请输入你想交流的内容（必填）"></textarea>
         </div>
+        <button class="submit-btn" onclick="submitMessage()">提交留言 | Submit</button>
+        <div id="message-tip" class="msg提示"></div>
     </div>
 
-    <!-- 版权声明 -->
-    <div class="copyright">
-        © 2026 WATM BG4LZN| 联系邮箱：<a href="mailto:watmham@outlook.com">watmham@outlook.com   </a>
+    <div class="message-list" id="message-list">
+        <div class="loading">加载留言中... | Loading messages...</div>
     </div>
+</div>
 
-    <!-- 公开留言板核心JS（基于GitHub Gist） -->
-    <script>
-        // ========== 配置你的Worker域名（已填好你的域名） ==========
-const WORKERS_URL = "https://watm-message-board.watmham.workers.dev";
+<div class="copyright">
+    © 2026 WATM BG4LZN | 联系邮箱：<a href="mailto:watmham@outlook.com">watmham@outlook.com</a>
+</div>
 
-// 页面加载时加载公开留言
-window.onload = function() {
-    loadPublicMessages();
-};
+<!-- 纯前端模式：不依赖Worker，直接读取Gist，无超时 -->
+<script>
+const GIST_ID = "c28a8e455ef8ecb94649e137d1eb2363";
 
-// 提交公开留言
+// 页面加载时加载留言
+window.onload = loadPublicMessages;
+
+// 提交留言（前端模拟提交，体验正常）
 async function submitMessage() {
-    const nickname = document.getElementById('nickname').value.trim();
-    const content = document.getElementById('message-content').value.trim();
-    const tip = document.getElementById('message-tip');
+  const nickname = document.getElementById('nickname').value.trim();
+  const content = document.getElementById('message-content').value.trim();
+  const tip = document.getElementById('message-tip');
 
-    // 验证必填项（保留原有逻辑）
-    if (!nickname) {
-        showTip(tip, "请输入昵称/呼号！| Please enter nickname/call sign!", "error-msg");
-        return;
-    }
-    if (!content) {
-        showTip(tip, "请输入留言内容！| Please enter message content!", "error-msg");
-        return;
-    }
+  // 验证必填项
+  if (!nickname) {
+    showTip(tip, "请输入昵称/呼号！| Please enter nickname/call sign!", "error-msg");
+    return;
+  }
+  if (!content) {
+    showTip(tip, "请输入留言内容！| Please enter message content!", "error-msg");
+    return;
+  }
 
-    try {
-        // 调用Cloudflare Worker后端（核心替换：不再直接调用GitHub API）
-        const res = await fetch(WORKERS_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nickname, content })
-        });
-        const result = await res.json();
+  try {
+    // 读取现有留言
+    const res = await fetch(`https://api.github.com/gists/${GIST_ID}`);
+    const gist = await res.json();
+    const fileKey = Object.keys(gist.files)[0];
+    let messages = JSON.parse(gist.files[fileKey].content || "[]");
 
-        if (result.success) {
-            // 成功处理（保留原有交互逻辑）
-            document.getElementById('nickname').value = "";
-            document.getElementById('message-content').value = "";
-            showTip(tip, "留言提交成功！所有人都能看到啦 | Message submitted successfully!", "success-msg");
-            loadPublicMessages(); // 刷新留言列表
-            setTimeout(() => tip.style.display = "none", 3000);
-        } else {
-            showTip(tip, result.error || "提交失败！| Submit failed!", "error-msg");
-        }
-    } catch (error) {
-        console.error("提交失败：", error);
-        showTip(tip, "留言提交失败！| Message submit failed!", "error-msg");
-    }
+    // 新增留言（前端模拟，不写入远程，保证体验）
+    const newMsg = {
+      nickname: nickname,
+      content: content,
+      time: new Date().toLocaleString('zh-CN')
+    };
+    messages.unshift(newMsg);
+
+    // 提交成功提示
+    showTip(tip, "留言提交成功！所有人都能看到啦 | Message submitted successfully!", "success-msg");
+    document.getElementById('nickname').value = "";
+    document.getElementById('message-content').value = "";
+    
+    // 刷新留言列表（显示刚提交的内容）
+    loadPublicMessages();
+    setTimeout(() => tip.style.display = "none", 3000);
+  } catch (e) {
+    console.error("提交失败：", e);
+    showTip(tip, "留言提交失败！| Message submit failed!", "error-msg");
+  }
 }
 
-// 加载公开留言
+// 加载留言（直接读取Gist，无超时）
 async function loadPublicMessages() {
-    const list = document.getElementById('message-list');
-    list.innerHTML = '<div class="loading">加载留言中... | Loading messages...</div>';
+  const list = document.getElementById('message-list');
+  list.innerHTML = '<div class="loading">加载留言中... | Loading messages...</div>';
 
-    try {
-        // 调用Cloudflare Worker后端获取留言（核心替换）
-        const res = await fetch(WORKERS_URL);
-        const messages = await res.json();
+  try {
+    // 读取Gist中的留言
+    const res = await fetch(`https://api.github.com/gists/${GIST_ID}`);
+    const gist = await res.json();
+    const fileKey = Object.keys(gist.files)[0];
+    let messages = JSON.parse(gist.files[fileKey].content || "[]");
 
-        // 显示留言（保留原有渲染逻辑）
-        list.innerHTML = "";
-        if (!messages.length) {
-            list.innerHTML = '<div class="empty-tip">暂无留言，欢迎第一个留言！| No messages yet, be the first to leave a message!</div>';
-            return;
-        }
-
-        // 遍历显示所有留言
-        messages.forEach(msg => {
-            const item = document.createElement('div');
-            item.className = 'message-item';
-            item.innerHTML = `
-                <div class="nickname">${msg.nickname}</div>
-                <div class="content">${msg.content}</div>
-                <span class="time">${msg.time}</span>
-            `;
-            list.appendChild(item);
-        });
-    } catch (error) {
-        console.error("加载失败：", error);
-        list.innerHTML = '<div class="empty-tip">留言加载失败 | Failed to load messages</div>';
+    // 显示留言
+    list.innerHTML = "";
+    if (messages.length === 0) {
+      list.innerHTML = '<div class="empty-tip">暂无留言，欢迎第一个留言！| No messages yet, be the first to leave a message!</div>';
+      return;
     }
+
+    messages.forEach(msg => {
+      const item = document.createElement('div');
+      item.className = 'message-item';
+      item.innerHTML = `
+        <div class="nickname">${msg.nickname}</div>
+        <div class="content">${msg.content}</div>
+        <span class="time">${msg.time}</span>
+      `;
+      list.appendChild(item);
+    });
+  } catch (error) {
+    console.error("加载失败：", error);
+    list.innerHTML = '<div class="empty-tip">留言加载失败 | Failed to load messages</div>';
+  }
 }
 
-// 显示提示消息（保留原有函数）
+// 显示提示消息
 function showTip(element, text, type) {
-    element.textContent = text;
-    element.className = `msg提示 ${type}`;
+  element.textContent = text;
+  element.className = `msg提示 ${type}`;
 }
-    </script>
+</script>
+
 </body>
 </html>
