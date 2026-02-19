@@ -96,6 +96,128 @@
         a:hover {
             text-decoration: underline;
         }
+
+        /* ========== 留言板样式 ========== */
+        .message-board {
+            max-width: 800px;
+            margin: 60px auto 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        .message-board h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #2c3e50;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .message-board h2 .en {
+            font-size: 16px;
+            color: #666;
+            font-weight: normal;
+            display: block;
+            margin-top: 5px;
+        }
+        .message-form {
+            margin-bottom: 30px;
+        }
+        .form-item {
+            margin-bottom: 15px;
+        }
+        .form-item label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        .form-item input, .form-item textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        .form-item textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .submit-btn {
+            display: inline-block;
+            padding: 10px 30px;
+            background: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .submit-btn:hover {
+            background: #2980b9;
+            text-decoration: none;
+        }
+        .message-list {
+            margin-top: 20px;
+        }
+        .message-item {
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+        }
+        .message-item .nickname {
+            font-weight: bold;
+            font-size: 17px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .message-item .content {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+        .message-item .time {
+            font-size: 12px;
+            color: #999;
+            text-align: right;
+            display: block;
+        }
+        .empty-tip {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            font-size: 16px;
+        }
+        .msg提示 {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        .success-msg {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        .error-msg {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
@@ -132,11 +254,128 @@
         <p class="en">Tip: The application form is in XLSX format, send it to watmham@outlook.com after filling</p>
     </div>
 
+    <!-- 留言板模块 -->
+    <div class="message-board">
+        <h2>
+            留言板 | Message Board
+            <span class="en">欢迎交流通联经验、奖项问题</span>
+        </h2>
+        
+        <!-- 留言表单 -->
+        <div class="message-form">
+            <div class="form-item">
+                <label for="nickname">昵称/呼号 | Nickname/Call Sign *</label>
+                <input type="text" id="nickname" placeholder="请输入你的昵称或电台呼号（必填）">
+            </div>
+            <div class="form-item">
+                <label for="message-content">留言内容 | Message Content *</label>
+                <textarea id="message-content" placeholder="请输入你想交流的内容（必填）"></textarea>
+            </div>
+            <button class="submit-btn" onclick="submitMessage()">提交留言 | Submit</button>
+            <div id="message-tip" class="msg提示"></div>
+        </div>
+
+        <!-- 留言列表 -->
+        <div class="message-list" id="message-list">
+            <div class="loading">加载留言中... | Loading messages...</div>
+        </div>
+    </div>
+
     <!-- 版权声明 -->
     <div class="copyright">
         © 2026 WATM BG4LZN| 联系邮箱：<a href="mailto:watmham@outlook.com">watmham@outlook.com   </a>
     </div>
+
+    <!-- 公开留言板核心JS（基于GitHub Gist） -->
+    <script>
+        // ========== 配置你的Worker域名（已填好你的域名） ==========
+const WORKERS_URL = "https://watm-message-board.watmham.workers.dev";
+
+// 页面加载时加载公开留言
+window.onload = function() {
+    loadPublicMessages();
+};
+
+// 提交公开留言
+async function submitMessage() {
+    const nickname = document.getElementById('nickname').value.trim();
+    const content = document.getElementById('message-content').value.trim();
+    const tip = document.getElementById('message-tip');
+
+    // 验证必填项（保留原有逻辑）
+    if (!nickname) {
+        showTip(tip, "请输入昵称/呼号！| Please enter nickname/call sign!", "error-msg");
+        return;
+    }
+    if (!content) {
+        showTip(tip, "请输入留言内容！| Please enter message content!", "error-msg");
+        return;
+    }
+
+    try {
+        // 调用Cloudflare Worker后端（核心替换：不再直接调用GitHub API）
+        const res = await fetch(WORKERS_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nickname, content })
+        });
+        const result = await res.json();
+
+        if (result.success) {
+            // 成功处理（保留原有交互逻辑）
+            document.getElementById('nickname').value = "";
+            document.getElementById('message-content').value = "";
+            showTip(tip, "留言提交成功！所有人都能看到啦 | Message submitted successfully!", "success-msg");
+            loadPublicMessages(); // 刷新留言列表
+            setTimeout(() => tip.style.display = "none", 3000);
+        } else {
+            showTip(tip, result.error || "提交失败！| Submit failed!", "error-msg");
+        }
+    } catch (error) {
+        console.error("提交失败：", error);
+        showTip(tip, "留言提交失败！| Message submit failed!", "error-msg");
+    }
+}
+
+// 加载公开留言
+async function loadPublicMessages() {
+    const list = document.getElementById('message-list');
+    list.innerHTML = '<div class="loading">加载留言中... | Loading messages...</div>';
+
+    try {
+        // 调用Cloudflare Worker后端获取留言（核心替换）
+        const res = await fetch(WORKERS_URL);
+        const messages = await res.json();
+
+        // 显示留言（保留原有渲染逻辑）
+        list.innerHTML = "";
+        if (!messages.length) {
+            list.innerHTML = '<div class="empty-tip">暂无留言，欢迎第一个留言！| No messages yet, be the first to leave a message!</div>';
+            return;
+        }
+
+        // 遍历显示所有留言
+        messages.forEach(msg => {
+            const item = document.createElement('div');
+            item.className = 'message-item';
+            item.innerHTML = `
+                <div class="nickname">${msg.nickname}</div>
+                <div class="content">${msg.content}</div>
+                <span class="time">${msg.time}</span>
+            `;
+            list.appendChild(item);
+        });
+    } catch (error) {
+        console.error("加载失败：", error);
+        list.innerHTML = '<div class="empty-tip">留言加载失败 | Failed to load messages</div>';
+    }
+}
+
+// 显示提示消息（保留原有函数）
+function showTip(element, text, type) {
+    element.textContent = text;
+    element.className = `msg提示 ${type}`;
+}
+    </script>
 </body>
 </html>
-
-
