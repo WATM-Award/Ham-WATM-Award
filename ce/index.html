@@ -3,34 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>单图片页面</title>
+    <title>CE:otto</title>
     <style>
-        /* 重置默认样式，保证页面干净 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        /* 让body占满整个屏幕，方便图片居中 */
         body {
-            width: 100vw;   /* 宽度=屏幕宽度 */
-            height: 100vh;  /* 高度=屏幕高度 */
-            display: flex;  /* 弹性布局，快速居中 */
-            justify-content: center; /* 水平居中 */
-            align-items: center;     /* 垂直居中 */
-            background-color: #f0f0f0; /* 页面背景色（图片加载前显示） */
-            overflow: hidden; /* 隐藏滚动条 */
-        }
-        /* 核心：图片自适应样式 */
-        .main-img {
-            max-width: 90%;  /* 图片最大宽度=屏幕90%，避免太满 */
-            max-height: 90%; /* 图片最大高度=屏幕90% */
-            object-fit: contain; /* 保持图片比例，不拉伸变形 */
+            width: 100vw;
+            height: 100vh;
+            /* 背景图核心样式 */
+            background: url("https://i.ibb.co/F4Gg4XB7/otto.jpg") no-repeat center center;
+            background-size: cover; /* 铺满屏幕，保持比例（可能裁剪） */
+            background-attachment: fixed; /* 固定背景，不随滚动移动 */
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
-    <!-- 替换这里的图片链接即可 -->
-    <img src="https://raw.githubusercontent.com/watmham/WATM/main/images/otto.jpg" alt="页面主图" class="main-img">
+    <!-- 页面无其他内容，仅背景图 -->
 </body>
 </html>
