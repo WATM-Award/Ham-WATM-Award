@@ -13,15 +13,31 @@
         body {
             width: 100vw;
             height: 100vh;
-            /* 背景图核心样式 */
             background: url("https://i.ibb.co/F4Gg4XB7/otto.jpg") no-repeat center center;
-            background-size: cover; /* 铺满屏幕，保持比例（可能裁剪） */
-            background-attachment: fixed; /* 固定背景，不随滚动移动 */
+            background-size: cover;
+            background-attachment: fixed;
             overflow: hidden;
+        }
+        audio {
+            display: none; /* 隐藏播放器，后台循环 */
         }
     </style>
 </head>
 <body>
-    <!-- 页面无其他内容，仅背景图 -->
+    <!-- 音频：强制无限循环，解决浏览器循环断点问题 -->
+    <audio id="bg-music" autoplay muted playsinline>
+        <source src="https://raw.githubusercontent.com/WZQ02/ccb-simulator/main/assets/mp3/wow_1.mp3" type="audio/mpeg">
+        你的浏览器不支持音频播放
+    </audio>
+
+    <script>
+        // 监听音频播放结束事件，立即重新播放（确保无缝循环）
+        const audio = document.getElementById('bg-music');
+        audio.loop = true; // 双重保障：标签属性 + JS强制循环
+        audio.addEventListener('ended', function() {
+            this.currentTime = 0; // 重置播放进度到开头
+            this.play(); // 立即重新播放
+        });
+    </script>
 </body>
 </html>
